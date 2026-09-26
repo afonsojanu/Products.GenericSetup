@@ -173,6 +173,20 @@ class ImportStepRegistryTests(BaseRegistryTests, ConformsToIStepRegistry,
         info_list = registry.listStepMetadata()
         self.assertEqual(len(info_list), 1)
 
+    def test_registerStep_no_version_after_versioned(self):
+        # Re-registering a step without a version, after it was
+        # previously registered with one, used to raise a TypeError
+        # from comparing a version string to None instead of either
+        # succeeding or raising the documented KeyError.
+        registry = self._makeOne()
+
+        registry.registerStep(id='one', version='1', handler=ONE_FUNC_NAME)
+
+        registry.registerStep(id='one', version=None, handler=ONE_FUNC_NAME)
+
+        info = registry.getStepMetadata('one')
+        self.assertEqual(info['version'], None)
+
     def test_registerStep_replacement(self):
 
         registry = self._makeOne()

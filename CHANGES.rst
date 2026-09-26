@@ -4,6 +4,11 @@ Changelog
 5.3 (unreleased)
 ----------------
 
+- Fix ``ImportStepRegistry.registerStep`` raising a ``TypeError`` instead
+  of accepting the registration when a step previously registered with a
+  version is re-registered without one (`#83
+  <https://github.com/zopefoundation/Products.GenericSetup/issues/83>`_).
+
 
 5.2 (2026-05-13)
 ----------------
